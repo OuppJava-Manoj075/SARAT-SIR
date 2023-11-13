@@ -1,0 +1,88 @@
+package com.logic.MovieTheaterBooing;
+
+import java.util.Scanner;
+
+public class TicketBooking {
+    private static char[][] seats ;
+    private static int rows;
+    private static int columns;
+
+    public static void main(String[] args){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the how many rows in your theater");
+         rows = scanner.nextInt();
+        System.out.println("Enter the column in your theater");
+        columns = scanner.nextInt();
+
+
+        initalialzeTheater(scanner);
+         displaySeatingLayout();
+
+        System.out.println("how many seat You want to book : ");
+        int noOfSeat = scanner.nextInt();
+
+        if(noOfSeat > 5){
+            throw new IllegalArgumentException("one user can book only 4 seat");
+        }else{
+            int book = 1;
+            for(int i= 0 ;  i < noOfSeat ; i++){
+                System.out.println("pls book "+book+" first ticket");
+                SeatBooking(scanner);
+                book++;
+            }
+
+        }
+
+        System.out.println("PAYMENT SUCCESULL");
+        System.out.println("* * * * * * * THANK YOU PLS VISIT AGAIN * * * * * * * * * ");
+
+
+
+    }
+
+    private static void initalialzeTheater(Scanner scanner) {
+
+        seats = new char[rows][columns];
+        for(int i= 0 ; i < seats.length ; i++){
+            for(int j= 0 ; j < seats[i].length ; j++){
+                seats[i][j] ='O';
+            }
+        }
+
+
+    }
+        /*  seatBooking method here it check the seat is booking or not if book then return seat is booked already
+        * else booked the seat */
+
+    private static void SeatBooking(Scanner scanner) {
+       System.out.println("Which Seats you want to book pls choose row and column");
+        int inputRow = scanner.nextInt();
+        int inputColumn = scanner.nextInt();
+
+      if(rows < inputRow || columns < inputColumn){
+           throw new IllegalArgumentException("you given invalid input");
+       }
+
+        if(seats[inputRow-1][inputColumn-1] == 'X'){
+           throw new IllegalArgumentException("The seat is Already Booked is choose another seat");
+       }else{
+            seats[inputRow-1][inputColumn-1] = 'X';
+            displaySeatingLayout();
+
+
+        }
+    }
+
+    private static void displaySeatingLayout() {
+
+        for(int i= 0 ; i < seats.length ; i++){
+            for(int j=0 ; j < seats[i].length ; j++){
+                System.out.print(seats[i][j]+"  ");
+            }
+            System.out.println();
+        }
+    }
+
+
+}
